@@ -3,21 +3,25 @@
 
 void display( void )
 {
-   glClearColor( 0.9, 0.9, 0.9, 0.0 );
+   glClearColor( 0.2, 0.2, 0.2, 0.0 );
    glShadeModel( GL_FLAT );
    glClear( GL_COLOR_BUFFER_BIT );
    glColor3f( 1.0, 0.0, 0.0 );
+   glLineWidth( 10 );
 
    float V0[] = { 10.0, 10.0, 0.0 };
-   float V1[] = { 200.0, 80.0, 0.0};
-   float V2[] = { 100.0, 160.0, 0.0 };
+   float V1[] = { 400.0, 160.0, 0.0};
+   float V2[] = { 200.0, 400.0, 0.0 };
 
    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
    glBegin( GL_POLYGON );
+
    glEdgeFlag( GL_TRUE );
    glVertex3fv( V0 );
+
    glEdgeFlag( GL_FALSE );
    glVertex3fv( V1 );
+
    glEdgeFlag( GL_TRUE );
    glVertex3fv( V2 );
    glEnd();

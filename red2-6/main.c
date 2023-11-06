@@ -1,8 +1,8 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-int moveRight = 0;
-int moveUp = 0;
+GLfloat move = 0.0;
+GLfloat step = 1.0;
 
 void display( void )
 {
@@ -42,7 +42,7 @@ void display( void )
       0xaa, 0xaa, 0xaa, 0xaa, 0x55, 0x55, 0x55, 0x55,
       0xaa, 0xaa, 0xaa, 0xaa, 0x55, 0x55, 0x55, 0x55};
 
-   GLbyte arrow[] = {
+   GLubyte arrow[] = {
       0x80, 0x00, 0x00, 0x01,
       0x61, 0x01, 0x80, 0x86,
       0x41, 0x01, 0x80, 0x82,
@@ -80,9 +80,6 @@ void display( void )
 
 
 
-      
-
-
 
    glClear( GL_COLOR_BUFFER_BIT );
    glColor3f( 1.0, 1.0, 1.0 );
@@ -90,17 +87,18 @@ void display( void )
    /* draw one solid, ontrippled rectangle,
     * then two stippled rectangles
     */
-   glRectf( moveRight, moveUp, moveRight+100, moveUp+100 );
+   glRectf( move, move, move+100.0, move+100.0 );
    glEnable( GL_POLYGON_STIPPLE );
    glPolygonStipple( fly );
    glRectf( 125.0, 25.0, 225.0, 125.0 );
    glPolygonStipple( halftone );
    glRectf( 225.0, 25.0, 325.0, 125.0 );
    glPolygonStipple( arrow );
-   glRectf(325, 25, 425, 125 );
+   glRectf( 325.0 , 25.0, 425.0, 125.0 );
    glDisable( GL_POLYGON_STIPPLE );
 
-   glFlush();
+   glutSwapBuffers();
+
 }
 
 void init( void )
@@ -119,24 +117,29 @@ void reshape( int w, int h )
 
 void keyboard (unsigned char key, int x, int y )
 {
-   moveRight++;
-   moveUp++;
-   if (moveRight > 300) moveRight=0;
-   if (moveUp > 300) moveUp=0;
-   display();
+   if (key == 27) exit( 0 );
 }
 
+void travel( void )
+{
+   move = move + step;
+   if (move > 360.0 ) step = -1.0f;
+   if (move < 5.0 ) step = 1.0f;
+
+   glutPostRedisplay();
+}
 
 int main( int argc, char** argv )
 {
    glutInit( &argc, argv );
-   glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
+   glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB );
    glutInitWindowSize( 350, 150 );
    glutCreateWindow( argv[0] );
    init();
    glutDisplayFunc( display );
    glutReshapeFunc( reshape );
    glutKeyboardFunc( keyboard );
+   glutIdleFunc( travel );
    glutMainLoop();
    return 0;
 }
