@@ -1,7 +1,10 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include <stdio.h>
+#include <math.h>
 
 GLfloat move = 0.0;
+GLfloat move_y = 0.0;
 GLfloat step = 1.0;
 
 void display( void )
@@ -87,14 +90,22 @@ void display( void )
    /* draw one solid, ontrippled rectangle,
     * then two stippled rectangles
     */
-   glRectf( move, move, move+100.0, move+100.0 );
    glEnable( GL_POLYGON_STIPPLE );
-   glPolygonStipple( fly );
-   glRectf( 125.0, 25.0, 225.0, 125.0 );
-   glPolygonStipple( halftone );
-   glRectf( 225.0, 25.0, 325.0, 125.0 );
    glPolygonStipple( arrow );
-   glRectf( 325.0 , 25.0, 425.0, 125.0 );
+   glRectf( move, move, move+100.0, move+100.0 );
+   
+   glColor3f( 1.0, 0.0, 0.0 );
+   glPolygonStipple( fly );
+   glRectf( 125.0, move, 225.0, move+100 );
+
+   glColor3f( 0.0, 1.0, 0.0 );
+   glPolygonStipple( halftone );
+   glRectf( move+100, move+100,  move-1000, move-1000 );
+   
+   glColor3f( 0.0, 0.0, 1.0 );
+   glPolygonStipple( arrow );
+   move_y = (15 * sin(.2 * move )) + (400-move);
+   glRectf( move , move_y, move+100, move_y+100 );
    glDisable( GL_POLYGON_STIPPLE );
 
    glutSwapBuffers();
@@ -123,7 +134,7 @@ void keyboard (unsigned char key, int x, int y )
 void travel( void )
 {
    move = move + step;
-   if (move > 360.0 ) step = -1.0f;
+   if (move > 400.0 ) step = -1.0f;
    if (move < 5.0 ) step = 1.0f;
 
    glutPostRedisplay();

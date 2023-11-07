@@ -8,7 +8,7 @@ CFLAGS           = -std=c11 -Wall -fmax-errors=10 -Wextra
 LFLAGS           = 
 
 # Define libraries to use
-LIBS         = -lglut -lGLU -lGL
+LIBS         = -lglut -lGLU -lGL -lm
 
 # Define the object files that this project needs
 OBJFILES     = main.o
