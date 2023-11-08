@@ -4,6 +4,7 @@
 #include <math.h>
 
 GLfloat move = 0.0;
+GLfloat move_x = 0.0;
 GLfloat move_y = 0.0;
 GLfloat step = 1.0;
 
@@ -104,8 +105,9 @@ void display( void )
    
    glColor3f( 0.0, 0.0, 1.0 );
    glPolygonStipple( arrow );
-   move_y = (15 * sin(.2 * move )) + (400-move);
-   glRectf( move , move_y, move+100, move_y+100 );
+   move_x = (35.0 * cos( 0.2 * move )) + move;
+   move_y = (35.0 * sin( 0.2 * move )) + (400.0-move);
+   glRectf( move_x , move_y, move_x+100.0, move_y+100. );
    glDisable( GL_POLYGON_STIPPLE );
 
    glutSwapBuffers();
@@ -134,7 +136,7 @@ void keyboard (unsigned char key, int x, int y )
 void travel( void )
 {
    move = move + step;
-   if (move > 400.0 ) step = -1.0f;
+   if (move > 500.0 ) step = -1.0f;
    if (move < 5.0 ) step = 1.0f;
 
    glutPostRedisplay();
