@@ -1,5 +1,26 @@
-= xss
-== Here are things you can find in this repositories:
-. Projects
-. Issue logs
-. Knowledge base articles for the Express Shipping Solution
+= Ascii Doc
+:icons: font
+:source-highlighter: pygments
+:pygments-style: emacs
+
+== This Is the Tool
+This is the text.  It is the content.
+
+TIP: This is really useful to highlight text on the page.
+
+
+WARNING: Don't do this in a work processor
+
+`$ sudo apt install asciidoc`
+
+== Example
+[source]
+$ sudo apt update
+$ sudo apt upgrade
+$ sudo apt autoremove
+
+[source,bash]
+[ -f /etc/hosts ] && cat /etc/hosts
+echo "we have finished"
+
+This is the end.
